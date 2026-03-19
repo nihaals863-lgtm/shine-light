@@ -41,6 +41,13 @@ const login = async (req, res) => {
                     message: 'Your organization registration is currently pending approval. Please check back later.'
                 });
             }
+
+            if (org.paymentStatus === 'Pending') {
+                return res.status(403).json({
+                    success: false,
+                    message: 'Your payment is pending. Please complete the payment process to access your account.'
+                });
+            }
             if (org.status === 'Suspended') {
                 return res.status(403).json({
                     success: false,
@@ -73,6 +80,13 @@ const login = async (req, res) => {
         // Create token
         const token = generateToken(user._id, user.role);
 
+        // Populate organization logo
+        let organizationLogo = '';
+        if (user.organizationId) {
+            const org = await Organization.findById(user.organizationId);
+            organizationLogo = org ? org.logo : '';
+        }
+
         res.status(200).json({
             success: true,
             token,
@@ -82,7 +96,8 @@ const login = async (req, res) => {
                 email: user.email,
                 role: user.role,
                 avatar: user.avatar,
-                organizationId: user.organizationId
+                organizationId: user.organizationId,
+                organizationLogo: organizationLogo
             },
         });
     } catch (error) {

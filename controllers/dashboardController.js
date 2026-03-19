@@ -69,6 +69,7 @@ const getDashboardStats = async (req, res) => {
         // Calculate rates
         const attendanceRate = maxPossiblePoints > 0 ? ((totalPointsEarned / maxPossiblePoints) * 100).toFixed(1) : 0;
         const completionRate = totalStudents > 0 ? ((completedStudents / totalStudents) * 100).toFixed(1) : 0;
+        const averagePoints = totalStudents > 0 ? Math.round(totalPointsEarned / totalStudents) : 0;
 
         // Completion Chart Data
         const completionData = [
@@ -114,6 +115,7 @@ const getDashboardStats = async (req, res) => {
                 totalWorkshops,
                 attendanceRate,
                 completionRate,
+                averagePoints,
                 recentStudents,
                 recentActivities: topRecentActivities,
                 completionData,
