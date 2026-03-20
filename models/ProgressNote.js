@@ -26,7 +26,33 @@ const progressNoteSchema = new mongoose.Schema(
         },
         notes: {
             type: String,
-            required: true,
+            required: false, // Changed to false as PIE fields might be used instead
+        },
+        // Unified Clinical / PCP Fields
+        serviceDescription: {
+            type: String,
+        },
+        faceToFace: {
+            type: String,
+            default: 'Face-to-Face'
+        },
+        faceToFaceIndicator: {
+            type: String,
+        },
+        purpose: {
+            type: String,
+        },
+        intervention: {
+            type: String,
+        },
+        effectiveness: {
+            type: String,
+        },
+        staffNotes: {
+            type: String,
+        },
+        staffSignature: {
+            type: String,
         },
         followUpRequired: {
             type: Boolean,
